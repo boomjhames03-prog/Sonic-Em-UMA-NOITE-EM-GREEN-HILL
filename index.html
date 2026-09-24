@@ -1,0 +1,255 @@
+<!DOCTYPE html><html lang="pt-BR" class="ctl"><head><meta charset="utf-8"><title>Sonic: A Noite em Green Hill</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>
+:root{--blue:#2f7bff;--gold:#ffc933;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html,body{height:100%;margin:0;background:#04060d;color:#e9f1ff;font-family:"Trebuchet MS",Verdana,sans-serif;overflow:hidden}
+canvas{display:block;position:fixed;inset:0}
+.ov{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;background:rgba(3,5,12,.88);z-index:5}
+h1{font:900 clamp(30px,6vw,60px)/1 Impact,"Arial Black",sans-serif;margin:0 0 14px;color:var(--blue);text-shadow:0 4px 0 #0a1a4a}
+.ov p{max-width:560px;line-height:1.5;margin:6px 0}
+#ov{overflow:hidden;background:linear-gradient(#02040c,#0a1640 60%,#1b2c64)}
+#ov .sky{position:absolute;inset:0;background:radial-gradient(circle at 78% 20%,#fff6d8 0 26px,#fff6d833 27px 70px,transparent 72px),radial-gradient(1.5px 1.5px at 20% 30%,#fff,transparent),radial-gradient(1.5px 1.5px at 60% 12%,#fff,transparent),radial-gradient(1px 1px at 35% 18%,#fff,transparent),radial-gradient(1px 1px at 90% 50%,#fff,transparent),radial-gradient(1.5px 1.5px at 8% 55%,#fff,transparent)}
+#ov .gr{position:absolute;left:-40%;right:-40%;bottom:-8%;height:50%;background:repeating-conic-gradient(#1f7a22 0 25%,#16561a 0 50%) 0 0/90px 90px;transform:perspective(280px) rotateX(62deg);transform-origin:50% 100%;-webkit-mask-image:linear-gradient(transparent,#000 55%);mask-image:linear-gradient(transparent,#000 55%)}
+#ov .eyes{position:absolute;left:14%;bottom:42%;display:flex;gap:14px;animation:bl 6s infinite}
+#ov .eyes i{width:9px;height:5px;border-radius:50%;background:#f22;box-shadow:0 0 12px 4px #f004}
+@keyframes bl{0%,90%,100%{opacity:1}93%{opacity:0}}
+.mn{position:relative;z-index:1;max-width:620px;display:flex;flex-direction:column;align-items:center}
+.msg{background:#0d1a3ccc;border:1px solid #2f7bff66;border-radius:14px 14px 14px 2px;padding:10px 14px;font-size:14px;line-height:1.45;text-align:left;margin-bottom:22px}
+#ov h1{font:900 clamp(44px,min(12vw,17vh),120px)/.9 Impact,"Arial Black",sans-serif;font-style:italic;margin:0;text-shadow:0 5px 0 #0a1a4a,0 0 30px #2f7bff88;animation:fk 7s infinite}
+#ov h1 em{display:block;font:800 clamp(18px,3.4vw,30px)/1.3 "Trebuchet MS",sans-serif;font-style:normal;color:var(--gold);text-shadow:0 2px 6px #000;margin-top:8px}
+@keyframes fk{0%,94%,100%{opacity:1}95%{opacity:.35}96%{opacity:1}97%{opacity:.5}}
+.bt{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:26px}.bt button{margin:0}
+button.alt{background:transparent;border:2px solid #ffffff55;color:#e9f1ff}
+#how{margin-top:16px;font-size:14px;line-height:1.6;background:#0009;padding:12px 16px;border-radius:10px;text-align:left}
+.mn small{opacity:.7;margin-top:14px}
+#mp{position:fixed;left:16px;bottom:16px;display:none;align-items:center;gap:10px;padding:6px 12px 6px 6px;background:#02040cbf;border:2px solid #5a1010;border-radius:10px;z-index:2}
+#mp canvas{border-radius:6px}#mp span{display:block;font-size:12px;opacity:.75}#mp b{font:900 24px Impact,sans-serif;color:var(--gold)}
+#mp.hot{border-color:#ff3b3b;animation:pl .5s infinite alternate}@keyframes pl{to{box-shadow:0 0 20px #f00}}
+#vg{position:fixed;inset:0;pointer-events:none;opacity:0;z-index:2;background:radial-gradient(transparent 45%,rgba(170,0,0,.75))}
+html,body{touch-action:none;-webkit-user-select:none;user-select:none}
+#tc{display:none}.ctl #tc{display:block}
+.tb{position:fixed;z-index:2;width:76px;height:76px;border-radius:50%;background:#2f7bffaa;border:2px solid #fff8;color:#fff;font:900 28px Impact,sans-serif;display:flex;align-items:center;justify-content:center}
+#bE{right:calc(24px + env(safe-area-inset-right,0px));bottom:36px}
+#bF{right:calc(112px + env(safe-area-inset-right,0px));bottom:30px;width:56px;height:56px;font-size:24px}
+#js{position:fixed;z-index:2;width:120px;height:120px;left:24px;bottom:30px;border-radius:50%;border:2px solid #fff6;background:#ffffff14;opacity:.35;pointer-events:none}
+#kn{position:absolute;left:40px;top:40px;width:40px;height:40px;border-radius:50%;background:#fffb}
+.ctl #mp{left:auto;right:12px;bottom:auto;top:52px}.ctl #sub{bottom:150px;width:min(560px,70vw)}
+#js{width:140px;height:140px;left:calc(28px + env(safe-area-inset-left,0px));bottom:36px;opacity:.8;background:#ffffff1f;border:3px solid #fff9;pointer-events:auto;box-shadow:0 0 18px #2f7bff88}
+#kn{width:56px;height:56px;left:calc(50% - 28px);top:calc(50% - 28px);background:#2f7bffe6;border:2px solid #fff}
+.tb{touch-action:none;box-shadow:0 0 14px #0008;cursor:pointer}.tb.on{background:#ffc933;color:#000}
+#bE{width:88px;height:88px;right:calc(28px + env(safe-area-inset-right,0px));bottom:40px;font-size:34px}
+#bR{right:132px;bottom:34px;font-size:30px}
+#bF{width:64px;height:64px;right:44px;bottom:148px;font-size:26px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+button{margin-top:18px;font:800 18px "Trebuchet MS",sans-serif;padding:12px 28px;border:0;border-radius:8px;background:var(--blue);color:#fff;cursor:pointer}
+button:focus-visible{outline:3px solid var(--gold)}
+#hud{position:fixed;left:16px;top:12px;font-size:14px;line-height:1.7;text-shadow:0 1px 3px #000;z-index:2;pointer-events:none}
+#hud .d{opacity:.45;text-decoration:line-through}
+#clk{position:fixed;right:16px;top:8px;font:900 28px Impact,sans-serif;color:var(--gold);z-index:2;text-shadow:0 2px 4px #000}
+#sub{position:fixed;left:50%;bottom:60px;transform:translateX(-50%);width:min(680px,92vw);text-align:center;font-size:18px;text-shadow:0 2px 4px #000;z-index:2}
+#pr{position:fixed;left:50%;top:58%;transform:translateX(-50%);color:var(--gold);font-weight:800;z-index:2;text-shadow:0 2px 4px #000}
+#x{position:fixed;left:50%;top:50%;width:6px;height:6px;margin:-3px;border-radius:50%;background:#fff8;z-index:2}
+#blk{position:fixed;inset:0;background:#000;opacity:0;pointer-events:none;z-index:3}
+</style></head><body>
+<div id="hud"></div><div id="clk"></div><div id="sub"></div><div id="pr"></div><div id="x"></div><div id="blk"></div>
+<div id="tc"><div id="js"><div id="kn"></div></div><div class="tb" id="bF">🔦</div><div class="tb" id="bR">⚡</div><div class="tb" id="bE">E</div></div><div id="vg"></div><div id="mp"><canvas id="mc" width="84" height="84"></canvas><div><span>Distância do monstro</span><b id="km">--</b></div></div>
+<div class="ov" id="ov"><div class="sky"></div><div class="eyes"><i></i><i></i></div><div class="gr"></div>
+<div class="mn"><div class="msg"><b>📱 Tails:</b> “Sonic, preciso que você cuide de Green Hill esta noite. Eu tive que sair por um tempo. Não deve acontecer nada... espero.”</div>
+<h1>SONIC<em>A Noite em Green Hill</em></h1>
+<div class="bt"><button id="go">▶ Jogar</button><button class="alt" id="hw">Como jogar</button><button class="alt" id="bc">🎮 Controles na tela: SIM</button></div>
+<div id="how" hidden>💡 Ligue o gerador · 💍 Recolha 8 anéis · 🔧 Verifique 3 equipamentos · 🚪 Feche 2 portões · 📡 Fale com Tails<br>🔑 Depois da meia-noite: ache a chave, abra o portão sul e escape sem ser pego.<br>🎮 Na tela (PC e celular): joystick move (até o fim = correr) · arraste na tela para olhar · E interage · ⚡ correr · 🔦 lanterna<br>💻 WASD/setas: mover · Shift: correr · Mouse: arraste para olhar (ou desligue os controles na tela para travar o mouse) · E: interagir · F: lanterna</div>
+<small>🎧 Use fones de ouvido</small></div></div>
+<div class="ov" id="end" style="display:none"></div>
+<script src="three.min.js"></script>
+<script>
+const $=i=>document.getElementById(i),R=Math.random;
+const scene=new THREE.Scene(),cam=new THREE.PerspectiveCamera(75,innerWidth/innerHeight,.1,150);
+const ren=new THREE.WebGLRenderer({antialias:true});ren.setSize(innerWidth,innerHeight);document.body.prepend(ren.domElement);
+onresize=()=>{ren.setSize(innerWidth,innerHeight);cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix()};
+cam.rotation.order='YXZ';scene.add(cam);
+const amb=new THREE.AmbientLight(0x6a7fff,.9);scene.add(amb);
+const moon=new THREE.DirectionalLight(0x8fa8ff,.3);moon.position.set(10,20,5);scene.add(moon);
+const spot=new THREE.SpotLight(0xfff2cc,0,30,.55,.5);cam.add(spot,spot.target);spot.target.position.set(0,0,-1);
+const cA=new THREE.Color(0xff8a3d),cB=new THREE.Color(0x060a1c);
+scene.background=new THREE.Color();scene.fog=new THREE.Fog(0,8,60);
+function sky(t){scene.background.copy(cA).lerp(cB,t);scene.fog.color.copy(scene.background);amb.intensity=.95-.7*t}
+const M=(g,c,e)=>new THREE.Mesh(g,new THREE.MeshStandardMaterial({color:c,emissive:e||0}));
+const cv=(w,h,f)=>{const c=document.createElement('canvas');c.width=w;c.height=h;f(c.getContext('2d'));return new THREE.CanvasTexture(c)};
+const tx=t=>cv(256,128,g=>{g.fillStyle='#7a4a1e';g.fillRect(0,0,256,128);g.fillStyle='#ffd23a';g.font='bold 34px sans-serif';g.textAlign='center';g.fillText(t,128,75)});
+const obs=[],ob=(x,z,r)=>obs.push([x,z,r]);
+// chão xadrez de Green Hill
+const gt=cv(64,64,g=>{g.fillStyle='#2f8f2a';g.fillRect(0,0,64,64);g.fillStyle='#276f22';g.fillRect(0,0,32,32);g.fillRect(32,32,32,32)});
+gt.wrapS=gt.wrapT=THREE.RepeatWrapping;gt.repeat.set(40,40);gt.magFilter=THREE.NearestFilter;
+const gm=new THREE.MeshStandardMaterial({map:gt}),gnd=new THREE.Mesh(new THREE.PlaneGeometry(200,200),gm);gnd.rotation.x=-Math.PI/2;scene.add(gnd);
+[[-30,-48],[26,-50],[-55,8],[55,-10]].forEach(([x,z])=>{const h=new THREE.Mesh(new THREE.SphereGeometry(14,14,8),gm);h.scale.y=.5;h.position.set(x,0,z);scene.add(h)});
+const sun=new THREE.Mesh(new THREE.SphereGeometry(7,16,12),new THREE.MeshBasicMaterial({color:0xffb050,fog:false}));sun.position.set(0,14,-95);scene.add(sun);
+// palmeiras
+const trG=new THREE.CylinderGeometry(.25,.4,6,6),lfG=new THREE.BoxGeometry(3,.15,.8),trM=new THREE.MeshStandardMaterial({color:0x6b4423}),lfM=new THREE.MeshStandardMaterial({color:0x1f8a2e});
+for(let i=0;i<34;i++){const x=(R()-.5)*76,z=(R()-.5)*76;if(Math.abs(x)<6&&z>24)continue;const g=new THREE.Group(),t=new THREE.Mesh(trG,trM);t.position.y=3;g.add(t);
+ for(let k=0;k<5;k++){const a=k*1.2566,l=new THREE.Mesh(lfG,lfM);l.position.set(Math.cos(a)*1.4,6,Math.sin(a)*1.4);l.rotation.set(0,-a,-.35);g.add(l)}
+ g.position.set(x,0,z);scene.add(g);ob(x,z,.6)}
+// cercas e portões
+const gates=[];
+function side(cx,cz,ry,gate){const g=new THREE.Group();g.position.set(cx,0,cz);g.rotation.y=ry;scene.add(g);
+ const seg=(x,w)=>{const b=M(new THREE.BoxGeometry(w,2.4,.3),0x8a94a8);b.position.set(x,1.2,0);g.add(b)};
+ if(!gate)return seg(0,80);
+ seg(-22.5,35);seg(22.5,35);
+ g.d=[-1,1].map(s=>{const d=M(new THREE.BoxGeometry(5,2.6,.3),0xb03030);d.position.set(s*7.5,1.3,1.2);d.userData.s=s;g.add(d);return d});
+ const lv=M(new THREE.BoxGeometry(.4,1.2,.4),0xffa020,0x552200);lv.position.set(-7,.6,2.5);g.add(lv);g.updateMatrixWorld(true);
+ const v=new THREE.Vector3();lv.getWorldPosition(v);gates.push({x:v.x,z:v.z,g,closed:0});ob(v.x,v.z,.4)}
+side(0,-40,0,1);side(40,0,-Math.PI/2,1);side(0,40,0,0);side(-40,0,-Math.PI/2,0);
+const ex=M(new THREE.BoxGeometry(10,2.6,.4),0x7a1c1c);ex.position.set(0,1.3,39.7);scene.add(ex);
+const lk=M(new THREE.BoxGeometry(.6,.6,.3),0xffc933,0x332200);lk.position.set(0,1.3,39.4);scene.add(lk);
+// postes de luz
+const lamps=[];
+[[-15,-15],[15,-15],[-15,15],[15,15],[0,-28],[0,0],[-28,0],[28,0]].forEach(([x,z],i)=>{
+ const p=M(new THREE.CylinderGeometry(.1,.12,4.2,6),0x333333);p.position.set(x,2.1,z);scene.add(p);
+ const b=M(new THREE.SphereGeometry(.4,8,6),0x222222);b.position.set(x,4.4,z);scene.add(b);
+ let L=null;if(i<4){L=new THREE.PointLight(0xffe9a0,0,24,1.5);L.position.set(x,4.2,z);scene.add(L)}lamps.push({b,L});ob(x,z,.5)});
+function lampsOn(on){lamps.forEach(l=>{l.b.material.emissive.set(on?0xffe9a0:0);l.b.material.color.set(on?0xffffaa:0x222222);if(l.L)l.L.intensity=on?1.4:0})}
+// gerador
+const GEN={x:0,z:-8};const gen=M(new THREE.BoxGeometry(3,2,2),0xd8b020);gen.position.set(GEN.x,1,GEN.z);scene.add(gen);ob(GEN.x,GEN.z,1.8);
+// equipamentos
+const mach=[[-22,-20,'Radar do Tails: funcionando... mas alguém mexeu na antena.',0x33ff99],[22,-12,'Esteira de anéis parada. Há pegadas ao redor... pequenas demais.',0xff8833],[-8,24,'No computador do Tails: “ELE ESTÁ AQUI”. A tela apaga.',0x33aaff]].map(([x,z,t,c])=>{
+ const m=M(new THREE.BoxGeometry(2,2,1.4),0x44506a);m.position.set(x,1,z);const led=new THREE.Mesh(new THREE.SphereGeometry(.15,6,6),new THREE.MeshBasicMaterial({color:c}));led.position.set(0,.6,.72);m.add(led);scene.add(m);ob(x,z,1.4);return{x,z,t,led,done:0}});
+// placas
+const signs=[['GREEN HILL',-6,20],['← ANÉIS',12,5],['CUIDADO',-18,-10]].map(([t,x,z])=>{
+ const g=new THREE.Group(),p=M(new THREE.CylinderGeometry(.08,.08,2,5),0x5a3a1a);p.position.y=1;
+ const b=new THREE.Mesh(new THREE.PlaneGeometry(2,1),new THREE.MeshStandardMaterial({map:tx(t)}));b.position.set(0,1.8,.05);g.add(p,b);g.position.set(x,0,z);g.userData.b=b;scene.add(g);return g});
+// anéis
+const rG=new THREE.TorusGeometry(.5,.12,8,16),rM=new THREE.MeshStandardMaterial({color:0xffc933,emissive:0x664400}),gM=new THREE.MeshStandardMaterial({color:0xaaddff,emissive:0x224466});
+const rings=[];for(let i=0;i<8;i++){const r=new THREE.Mesh(rG,rM);r.position.set((R()-.5)*66,1.2,(R()-.5)*66);scene.add(r);rings.push(r)}
+let ghosts=[];
+// a sombra
+const fig=new THREE.Group();{const dk=0x050a1e,b=M(new THREE.CylinderGeometry(.35,.45,1.1,8),dk),h=M(new THREE.SphereGeometry(.5,10,8),dk);b.position.y=.9;h.position.y=1.9;fig.add(b,h);
+ for(let i=0;i<3;i++){const q=M(new THREE.ConeGeometry(.2,1,5),dk);q.position.set((i-1)*.3,2.2-Math.abs(i-1)*.25,-.45);q.rotation.x=-1.9;fig.add(q)}
+ [-.2,.2].forEach(x=>{const e=new THREE.Mesh(new THREE.SphereGeometry(.09,6,6),new THREE.MeshBasicMaterial({color:0xff1010,fog:false}));e.position.set(x,1.95,.42);fig.add(e)})}
+fig.visible=false;fig.scale.setScalar(1.3);scene.add(fig);
+// Sonic, chave e retrato do monstro
+const son=new THREE.Group(),bl=0x1d5cff;{const P=(g,c,x,y,z)=>{const m=M(g,c);m.position.set(x,y,z);son.add(m);return m};
+ P(new THREE.SphereGeometry(.45,12,10),bl,0,.75,0);P(new THREE.SphereGeometry(.42,12,10),bl,0,1.4,0);P(new THREE.SphereGeometry(.28,10,8),0xf2c9a0,0,1.3,.22);
+ [-.12,.12].forEach(x=>P(new THREE.SphereGeometry(.1,8,6),0xffffff,x,1.48,.36));
+ [-.25,0,.25].forEach(x=>{const q=P(new THREE.ConeGeometry(.15,.8,6),bl,x,1.6-Math.abs(x)*.6,-.4);q.rotation.x=-1.9});
+ son.userData.l=[-.15,.15].map(x=>P(new THREE.BoxGeometry(.25,.2,.5),0xdd2222,x,.1,0))}
+son.visible=false;scene.add(son);
+const key=new THREE.Group();{const P=(geo,x,y,z)=>{const m=M(geo,0xffd23a,0x886600);m.position.set(x,y,z);key.add(m)};
+ P(new THREE.TorusGeometry(.35,.1,8,14),0,1.4,0);P(new THREE.CylinderGeometry(.08,.08,1,6),0,.7,0);P(new THREE.BoxGeometry(.3,.12,.1),.2,.35,0);P(new THREE.BoxGeometry(.25,.12,.1),.18,.6,0);
+ const bm=new THREE.Mesh(new THREE.CylinderGeometry(.2,.2,40,8),new THREE.MeshBasicMaterial({color:0xffe066,transparent:true,opacity:.3,fog:false}));bm.position.y=20;key.add(bm)}
+key.visible=false;scene.add(key);
+{const g=$('mc').getContext('2d');g.fillStyle='#04060f';g.fillRect(0,0,84,84);g.fillStyle='#0a1436';g.beginPath();g.arc(42,50,26,0,7);g.fill();
+ [[24,38,6,14,34,24],[34,24,42,0,50,24],[60,38,78,14,50,24]].forEach(t=>{g.beginPath();g.moveTo(t[0],t[1]);g.lineTo(t[2],t[3]);g.lineTo(t[4],t[5]);g.fill()});
+ g.shadowColor='#f00';g.shadowBlur=12;g.fillStyle='#f22';g.beginPath();g.ellipse(32,48,6,4,-.3,0,7);g.fill();g.beginPath();g.ellipse(52,48,6,4,.3,0,7);g.fill();
+ g.shadowBlur=0;g.strokeStyle='#ddd';g.beginPath();g.moveTo(28,64);for(let i=0;i<7;i++)g.lineTo(28+i*4.7+2.3,i%2?64:70);g.stroke()}
+$('hw').onclick=()=>$('how').hidden=!$('how').hidden;
+// som
+let AC;const tone=(f,d,ty='sine',v=.15,at=0)=>{if(!AC)return;const o=AC.createOscillator(),g=AC.createGain(),t=AC.currentTime+at;o.type=ty;o.frequency.value=f;g.gain.setValueAtTime(v,t);g.gain.exponentialRampToValueAtTime(.001,t+d);o.connect(g).connect(AC.destination);o.start(t);o.stop(t+d)};
+const step=()=>tone(70+R()*20,.18,'triangle',.6);
+const speak=(t,p,r)=>{try{const u=new SpeechSynthesisUtterance(t);u.lang='pt-BR';u.pitch=p;u.rate=r;speechSynthesis.speak(u)}catch(e){}};
+let st;const say=(t,ms=4000)=>{$('sub').textContent=t;clearTimeout(st);st=setTimeout(()=>$('sub').textContent='',ms)};
+const blink=f=>{$('blk').style.opacity=1;setTimeout(()=>{f&&f();$('blk').style.opacity=0},280)};
+// estado
+const K={};let hasKey=0,ct=0,stepT=0,ph=0,tph=0,yaw=0,pit=0,px=0,pz=30,bob=0,fl=true,lock=false,frozen=false,last=performance.now(),evT=12,ringing=0,ringIv,called=0,got=0,best=null,figT=0,figSeen=0,fin=0,finT=0,histT=0;
+const hist=[],T={luz:0,an:0,eq:0,pt:0,tl:0},all=()=>T.luz&&T.an&&T.eq&&T.pt&&T.tl;
+function hud(){if(ph<2)return $('hud').innerHTML='';const c=mach.filter(m=>m.done).length,g=gates.filter(k=>k.closed).length;
+ $('hud').innerHTML=[['luz','💡 Ligar as luzes'],['an','💍 Recolher anéis ('+got+'/8)'],['eq','🔧 Verificar equipamentos ('+c+'/3)'],['pt','🚪 Fechar portões ('+g+'/2)'],['tl','📡 Contatar Tails']].map(([k,t])=>`<div class="${T[k]?'d':''}">${t}</div>`).join('')+(ph>=5?'<div>'+(hasKey?'🚪 Abra o portão sul!':'🔑 Encontre a chave!')+'</div>':all()?'<div>➡ Saia de Green Hill pelo portão sul</div>':'')}
+function prog(){hud();if(!called&&T.luz+T.an+T.eq+T.pt>=3){called=1;setTimeout(call,4500)}}
+function cands(){const a=[];
+ if(ph==2&&!T.luz)a.push([GEN.x,GEN.z,'Ligar o gerador',()=>{T.luz=1;lampsOn(1);amb.intensity=.4;tone(300,.5,'sawtooth',.2);say('As luzes voltaram. Mas a escuridão ficou mais quieta...',4000);prog()}]);
+ mach.forEach(m=>{if(!m.done)a.push([m.x,m.z,'Verificar equipamento',()=>{m.done=1;m.led.material.color.set(0x555555);tone(600,.1);say(m.t,5500);if(mach.every(k=>k.done))T.eq=1;prog()}])});
+ gates.forEach(k=>{if(!k.closed)a.push([k.x,k.z,'Fechar o portão',()=>{k.closed=1;tone(120,.6,'square',.2);say('Portão fechado.',2500);if(gates.every(q=>q.closed))T.pt=1;prog()}])});
+ return a}
+function act(){if(ringing)return answer();if(ph==5){if(hasKey&&pz>36&&Math.abs(px)<6)cut();return}if(best&&ph==2)best[3]()}
+onkeydown=e=>{K[e.code]=1;if(e.code=='KeyE')act();if(e.code=='KeyF')fl=!fl};onkeyup=e=>K[e.code]=0;
+document.addEventListener('pointerlockchange',()=>lock=document.pointerLockElement==ren.domElement);
+onmousemove=e=>{if(lock){yaw-=e.movementX*.0025;pit=Math.max(-1.2,Math.min(1.2,pit-e.movementY*.0025))}};
+// eventos estranhos
+function watchFig(){const a=yaw+(R()-.5)*1.4;fig.position.set(px-Math.sin(a)*20,0,pz-Math.cos(a)*20);fig.lookAt(px,0,pz);fig.visible=true;figT=9;figSeen=0}
+const ev=[
+ ()=>{say('(passos atrás de você...)',2500);for(let i=0;i<6;i++)setTimeout(step,i*420);setTimeout(()=>say('Sonic: ...nada.',2500),4200)},
+ ()=>{const s=signs[R()*3|0];blink(()=>{const a=yaw+(R()-.5);s.position.set(px-Math.sin(a)*8,0,pz-Math.cos(a)*8);s.rotation.y=a;s.userData.b.material.map=tx('VOLTE');s.userData.b.material.needsUpdate=true});say('Sonic: Essa placa estava ali?',3500)},
+ ()=>{const h=hist[Math.max(0,hist.length-10)];if(!h)return;const r=new THREE.Mesh(rG,gM);r.position.set(h[0],1.2,h[1]);scene.add(r);ghosts.push(r);say('Um anel apareceu onde você acabou de passar.',3500)},
+ ()=>{watchFig();say('Sonic: Tem alguém aí?',2500)}];
+// ligação
+function call(){ringing=1;ringIv=setInterval(()=>{tone(880,.15,'square',.08);tone(660,.15,'square',.08,.2)},1200);say('📞 Tails está ligando...',60000)}
+function answer(){clearInterval(ringIv);ringing=0;
+ [['Tails: “Sonic... você ainda está em Green Hill?”',1.9,0],['Sonic: “É claro. Por quê?”',.9,4200],['...',0,7200],['Tails: “Então... quem está aí com você?”',1.9,10200]].forEach(([t,p,d])=>setTimeout(()=>{say(t,3500);p&&speak(t.replace(/^[^:]+: /,'').replace(/[“”]/g,''),p,.9)},d));
+ setTimeout(()=>{tone(200,.7,'sawtooth',.12);say('A ligação foi interrompida.',3000);T.tl=1;hud()},13500);
+ setTimeout(()=>{say('Alguma coisa se move entre as árvores...',4500);watchFig()},16500);
+ setTimeout(()=>{evT=6},20000)}
+// dusk → blecaute
+function dark(){ph=2;tph=0;lampsOn(0);sun.visible=false;sky(1);tone(45,1,'sawtooth',.5);blink();hud();
+ say('Sonic: As luzes... todas ao mesmo tempo?',4000);setTimeout(()=>say('Sonic: Vou ligar o gerador, no centro ao norte.',5000),4200)}
+// final
+function finale(){frozen=true;ph=3;say('O portão está trancado.',3000);[0,150,300].forEach(d=>setTimeout(()=>tone(160,.15,'square',.2),d));
+ setTimeout(()=>{lampsOn(0);amb.intensity=.12;blink();fin=1;say('',1)},3200);
+ setTimeout(()=>{speak('Sonic...',0,.35);say('“Sonic...”',4500);frozen=false;fig.position.set(px+Math.sin(yaw)*3.2,0,pz+Math.cos(yaw)*3.2);fig.lookAt(px,0,pz);fig.visible=true;fin=2;finT=8},6200)}
+const UI=['mp','vg','hud','pr','x','clk','sub','tc'];
+function showEnd(t,p,b){$('end').innerHTML=`<h1>${t}</h1><p>${p}</p><button onclick="location.reload()">${b}</button>`;$('end').style.display='flex';UI.forEach(i=>$(i).style.display='none')}
+function endGame(){fin=3;tone(60,1.2,'sawtooth',.5);speak('Corre!',.4,.5);
+ blink(()=>{const dx=fig.position.x-px,dz=fig.position.z-pz,d=Math.hypot(dx,dz);fig.position.x=px+dx/d*22;fig.position.z=pz+dz/d*22;
+  const k=[[-30,-30],[30,-28],[-32,4]][R()*3|0];key.position.set(k[0],0,k[1]);key.visible=true;ph=5;ct=0;hud();say('Sonic: O portão precisa de uma chave... CORRE!',5000)})}
+function chase(dt){ct+=dt;const dx=px-fig.position.x,dz=pz-fig.position.z,d=Math.hypot(dx,dz),sp=(9.5+Math.min(3,ct*.05))*dt;
+ fig.position.x+=dx/d*sp;fig.position.z+=dz/d*sp;fig.lookAt(px,0,pz);key.rotation.y+=dt*2;
+ stepT-=dt;if(stepT<0){stepT=.42;tone(80,.15,'triangle',Math.min(.9,5/d))}
+ if(key.visible&&Math.hypot(px-key.position.x,pz-key.position.z)<2){key.visible=false;hasKey=1;tone(1500,.3);say('Sonic: Peguei a chave! Agora, o portão sul!',3500);hud()}
+ const g=pz>36&&Math.abs(px)<6;$('pr').textContent=g?(hasKey?'[E] Abrir o portão':'🔒 Trancado — encontre a chave'):'';
+ if(d<1.4)lose()}
+function lose(){ph=4;tone(50,1.4,'sawtooth',.7);blink(()=>showEnd('VOCÊ FOI PEGO','Os olhos vermelhos foram a última coisa que Sonic viu em Green Hill.','Tentar de novo'))}
+function mon(){const on=fig.visible&&ph>=2;$('mp').style.display=on?'flex':'none';if(!on)return $('vg').style.opacity=0;
+ const d=Math.hypot(px-fig.position.x,pz-fig.position.z);$('km').textContent=(d/1000).toFixed(3)+' km';$('mp').classList.toggle('hot',d<14);$('vg').style.opacity=Math.max(0,1-d/16)}
+function cut(){ph=6;ct=0;spot.intensity=0;lampsOn(1);sky(.55);amb.intensity=.9;UI.forEach(i=>$(i).style.display='none');
+ son.position.set(0,0,32);son.visible=true;fig.position.set(2,0,37.5);fig.scale.setScalar(1.3);fig.visible=true;tone(500,.3,'square',.1);say('Sonic: ...Tchau, Green Hill!',3500);speak('Tchau, Green Hill!',1.6,1.1)}
+function cutUpdate(dt){ct+=dt;son.position.z=Math.min(100,32+Math.max(0,ct-.8)*18);son.position.y=Math.abs(Math.sin(ct*10))*.15;
+ son.userData.l.forEach((l,i)=>l.position.z=Math.sin(ct*20+i*3.14)*.3);ex.position.y=Math.min(6.3,ex.position.y+dt*5);lk.visible=false;
+ cam.position.set(6,1.7,50);cam.lookAt(son.position.x,1,son.position.z);fig.lookAt(son.position.x,0,son.position.z);
+ if(ct>3)fig.scale.setScalar(Math.max(.01,1.3*(1-(ct-3)*.7)));
+ if(ct>4.4&&fig.visible){fig.visible=false;tone(300,.8,'sine',.2);say('O monstro desapareceu na neblina...',3500)}
+ if(ct>8&&ph==6){ph=4;showEnd('SONIC ESCAPOU!','Sonic disparou para longe de Green Hill — e o monstro sumiu na neblina. Mas o que ele era?','Jogar de novo')}}
+// início
+$('go').onclick=()=>{$('ov').style.display='none';if(!document.documentElement.classList.contains('ctl'))try{ren.domElement.requestPointerLock()}catch(e){}
+ AC=new(window.AudioContext||window.webkitAudioContext)();const o=AC.createOscillator(),g=AC.createGain();o.frequency.value=48;g.gain.value=.05;o.connect(g).connect(AC.destination);o.start();
+ ph=1;tph=0;lampsOn(1);sky(0);
+ setTimeout(()=>say('Sonic chega a Green Hill. O sol começa a se pôr...',5000),1000);
+ setTimeout(()=>say('Tails: “Não deve acontecer nada... espero.”',4500),7000);
+ setTimeout(()=>say('Sonic: Tudo tranquilo. Como sempre.',4000),12500)};
+function loop(n){requestAnimationFrame(loop);const dt=Math.min(.05,(n-last)/1e3);last=n;
+ if(ph==6)cutUpdate(dt);if(ph>0&&ph!=4&&ph!=6){tph+=dt;mon();
+  if(ph==1){const t=Math.min(1,tph/18);sky(t);sun.position.y=14-30*t;if(t>=1)dark()}
+  if(!frozen){const f=(K.KeyW||K.ArrowUp?1:0)-(K.KeyS||K.ArrowDown?1:0),s=(K.KeyD?1:0)-(K.KeyA?1:0);yaw+=((K.ArrowLeft?1:0)-(K.ArrowRight?1:0))*2*dt;
+   if(f||s){const dx=-Math.sin(yaw)*f+Math.cos(yaw)*s,dz=-Math.cos(yaw)*f-Math.sin(yaw)*s,l=Math.hypot(dx,dz),sp=(K.ShiftLeft?13:7)*dt;px+=dx/l*sp;pz+=dz/l*sp;bob+=dt*(K.ShiftLeft?14:9)}}
+  px=Math.max(-39,Math.min(39,px));pz=Math.max(-39,Math.min(39,pz));
+  obs.forEach(([x,z,r])=>{const d=Math.hypot(px-x,pz-z);if(d>0&&d<r+.5){px=x+(px-x)/d*(r+.5);pz=z+(pz-z)/d*(r+.5)}});
+  cam.position.set(px,1.6+Math.sin(bob)*.06,pz);cam.rotation.set(pit,yaw,0);
+  spot.intensity=fl&&ph>=2?(fin?(R()>.25?1.6:.2):2.2):0;
+  rings.forEach((r,i)=>{if(!r.visible)return;r.rotation.y+=dt*2;if(Math.hypot(px-r.position.x,pz-r.position.z)<1.6){r.visible=false;got++;tone(1320,.15);if(got==8){T.an=1;say('Todos os anéis recolhidos!',3000)}prog()}});
+  ghosts=ghosts.filter(r=>{r.rotation.y+=dt*2;if(Math.hypot(px-r.position.x,pz-r.position.z)<2){scene.remove(r);say('...o anel sumiu.',2500);return false}return true});
+  gates.forEach(k=>k.g.d.forEach(d=>{const s=d.userData.s;d.position.x+=((k.closed?s*2.5:s*7.5)-d.position.x)*dt*2;d.position.z+=((k.closed?0:1.2)-d.position.z)*dt*2}));
+  mach.forEach(m=>{if(!m.done)m.led.visible=Math.sin(n/300)>0});
+  histT+=dt;if(histT>.3){histT=0;hist.push([px,pz]);if(hist.length>40)hist.shift()}
+  if(ph==2){evT-=dt;if(evT<0){evT=13+R()*9;ev[R()*ev.length|0]()}
+   if(all()&&pz>36&&Math.abs(px)<6)finale();
+   best=null;let bd=3.4;cands().forEach(c=>{const d=Math.hypot(px-c[0],pz-c[1]);if(d<bd){bd=d;best=c}});
+   $('pr').textContent=ringing?'[E] Atender Tails 📞':best?'[E] '+best[2]:'';
+   const m=Math.min(1439,1290+tph*.8);$('clk').textContent=String(m/60|0).padStart(2,'0')+':'+String(m%60|0).padStart(2,'0')}
+  if(ph==3||ph==5){if(ph==3)$('pr').textContent='';$('clk').textContent='00:00';$('clk').style.color='#ff3b3b'}
+  if(ph==5)chase(dt);
+  if(fig.visible){const dx=fig.position.x-px,dz=fig.position.z-pz,c=(-Math.sin(yaw)*dx-Math.cos(yaw)*dz)/Math.hypot(dx,dz);
+   if(fin==2){finT-=dt;if((c>.55||finT<0)&&fin==2)endGame()}
+   else if(ph<5){figT-=dt;if(c>.9)figSeen+=dt;if(figSeen>.6||figT<0){fig.visible=false;if(figSeen>.6)say('Sonic: ...sumiu.',2500)}}}}
+ ren.render(scene,cam)}
+// controles na tela (mouse e toque)
+{const j=$('js'),kn=$('kn');let jid=null,lid=null,lp=[0,0];
+ const setJ=e=>{const r=j.getBoundingClientRect(),dx=e.clientX-r.left-r.width/2,dy=e.clientY-r.top-r.height/2,m=Math.min(1,Math.hypot(dx,dy)/(r.width/2)),a=Math.atan2(dy,dx),ux=Math.cos(a)*m,uy=Math.sin(a)*m;
+  kn.style.transform=`translate(${ux*r.width*.3}px,${uy*r.width*.3}px)`;K.KeyA=ux<-.3;K.KeyD=ux>.3;K.KeyW=uy<-.3;K.KeyS=uy>.3;K.ShiftLeft=m>.9||!!K.run};
+ j.onpointerdown=e=>{e.preventDefault();jid=e.pointerId;j.setPointerCapture(jid);setJ(e)};
+ j.onpointermove=e=>{if(e.pointerId==jid)setJ(e)};
+ j.onpointerup=j.onpointercancel=e=>{if(e.pointerId==jid){jid=null;K.KeyA=K.KeyD=K.KeyW=K.KeyS=false;K.ShiftLeft=!!K.run;kn.style.transform=''}};
+ document.addEventListener('pointerdown',e=>{if(ph==0||lock||e.target.closest('.tb,#js,.ov,button'))return;lid=e.pointerId;lp=[e.clientX,e.clientY]});
+ document.addEventListener('pointermove',e=>{if(e.pointerId!=lid)return;yaw-=(e.clientX-lp[0])*.005;pit=Math.max(-1.2,Math.min(1.2,pit-(e.clientY-lp[1])*.005));lp=[e.clientX,e.clientY]});
+ const up=e=>{if(e.pointerId==lid)lid=null};document.addEventListener('pointerup',up);document.addEventListener('pointercancel',up);
+ const B=(id,dn,un)=>{const b=$(id),u=()=>{b.classList.remove('on');un&&un()};b.onpointerdown=e=>{e.preventDefault();b.setPointerCapture(e.pointerId);b.classList.add('on');dn()};b.onpointerup=b.onpointercancel=u};
+ B('bE',()=>act());B('bF',()=>fl=!fl);B('bR',()=>{K.run=1;K.ShiftLeft=true},()=>{K.run=0;K.ShiftLeft=false});
+ document.addEventListener('contextmenu',e=>e.preventDefault());
+ $('bc').onclick=()=>{const on=document.documentElement.classList.toggle('ctl');$('bc').textContent='🎮 Controles na tela: '+(on?'SIM':'NÃO')}}
+requestAnimationFrame(loop);
+</script></body></html>
